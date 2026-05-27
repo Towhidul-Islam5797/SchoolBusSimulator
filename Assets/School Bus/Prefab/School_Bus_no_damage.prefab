@@ -641,6 +641,8 @@ GameObject:
   - component: {fileID: 4450944057292290}
   - component: {fileID: 33180705247028430}
   - component: {fileID: 23305577431920286}
+  - component: {fileID: 5982445979891855742}
+  - component: {fileID: 1033015574221618896}
   m_Layer: 0
   m_Name: bus_outer_body
   m_TagString: Untagged
@@ -720,6 +722,55 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &5982445979891855742
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355330469982444}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 54bf0519df8f27248a1a25511ba725b8, type: 3}
+--- !u!54 &1033015574221618896
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355330469982444}
+  serializedVersion: 5
+  m_Mass: 8000
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1389977277666114
 GameObject:
   m_ObjectHideFlags: 0
@@ -1198,11 +1249,11 @@ Transform:
   m_GameObject: {fileID: 1716094719223188}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.352, y: -0.0682, z: -0.111}
+  m_LocalPosition: {x: -0.352, y: -0.0682, z: -0.081}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7566179468964233014}
+  m_Father: {fileID: 2339103854585848197}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &33062395081262064
 MeshFilter:
@@ -1630,7 +1681,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4147979907357606}
-  - component: {fileID: 6059130165704909036}
   m_Layer: 0
   m_Name: School_Bus_no_damage
   m_TagString: Untagged
@@ -1651,14 +1701,16 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7566179468964233014}
-  - {fileID: 2339103854585848197}
-  - {fileID: 4211645963363118899}
+  - {fileID: 6819713478108174383}
+  - {fileID: 8650380063157403002}
+  - {fileID: 3750324855156791905}
+  - {fileID: 4135658666217031474}
+  - {fileID: 4931799140618403022}
+  - {fileID: 3443894312513699125}
   - {fileID: 854772854907204058}
+  - {fileID: 2339103854585848197}
   - {fileID: 4471186579578290}
   - {fileID: 4850683806587486}
-  - {fileID: 3443894312513699125}
-  - {fileID: 4931799140618403022}
   - {fileID: 4800254270203808}
   - {fileID: 4202914274902008}
   - {fileID: 4704690113073506}
@@ -1674,28 +1726,6 @@ Transform:
   - {fileID: 3401526660969399341}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &6059130165704909036
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1871185800625390}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 54bf0519df8f27248a1a25511ba725b8, type: 3}
 --- !u!1 &1880490927839252
 GameObject:
   m_ObjectHideFlags: 0
@@ -1877,6 +1907,37 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &250100117167422503
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4135658666217031474}
+  m_Layer: 0
+  m_Name: WC_RR
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4135658666217031474
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250100117167422503}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.352, y: 0.0682, z: 0.081}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4147979907357606}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &599633520781418168
 GameObject:
   m_ObjectHideFlags: 0
@@ -1887,7 +1948,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4931799140618403022}
   m_Layer: 0
-  m_Name: bus_front_tire_02_pivot
+  m_Name: bus_front_tire_FL_pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1936,11 +1997,11 @@ Transform:
   m_GameObject: {fileID: 2223680003946650544}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.352, y: -0.0682, z: -0.111}
+  m_LocalPosition: {x: -0.3493, y: -0.0682, z: -0.08109999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4211645963363118899}
+  m_Father: {fileID: 854772854907204058}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &986586436849121726
 MeshFilter:
@@ -2041,7 +2102,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2339103854585848197}
   m_Layer: 0
-  m_Name: bus_back_tire_02_pivot
+  m_Name: bus_back_tire_RR_pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2056,10 +2117,11 @@ Transform:
   m_GameObject: {fileID: 3339499896799834875}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.352, y: 0.0682, z: 0.0543}
+  m_LocalPosition: {x: 0.352, y: 0.0682, z: 0.081}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4849941885176700}
   - {fileID: 2982809724569212676}
   m_Father: {fileID: 4147979907357606}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2090,7 +2152,7 @@ Transform:
   m_GameObject: {fileID: 3460889943083010379}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.352, y: -0.0682, z: -0.111}
+  m_LocalPosition: {x: -0.3493, y: -0.0682, z: -0.1374}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2153,7 +2215,7 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &5063349531813464958
+--- !u!1 &4304251692275207546
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2161,31 +2223,30 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4211645963363118899}
+  - component: {fileID: 3750324855156791905}
   m_Layer: 0
-  m_Name: bus_back_tire_03_pivot
+  m_Name: WC_RL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4211645963363118899
+--- !u!4 &3750324855156791905
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5063349531813464958}
+  m_GameObject: {fileID: 4304251692275207546}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.352, y: 0.0682, z: -0.0973}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.3493, y: 0.0682, z: -0.1272}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 3824139277707148559}
+  m_Children: []
   m_Father: {fileID: 4147979907357606}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &5663185105993804750
+--- !u!1 &5013749757883556347
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2193,28 +2254,58 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7566179468964233014}
+  - component: {fileID: 8650380063157403002}
   m_Layer: 0
-  m_Name: bus_back_tire_01_pivot
+  m_Name: WC_FR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7566179468964233014
+--- !u!4 &8650380063157403002
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5663185105993804750}
+  m_GameObject: {fileID: 5013749757883556347}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.352, y: 0.0682, z: 0.111}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.1776, y: 0.0694, z: 0.116}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4849941885176700}
+  m_Children: []
+  m_Father: {fileID: 4147979907357606}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5349816672873392363
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6819713478108174383}
+  m_Layer: 0
+  m_Name: WC_FL
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6819713478108174383
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5349816672873392363}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.1723, y: 0.0679, z: -0.1626}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
   m_Father: {fileID: 4147979907357606}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5793809163896339432
@@ -2308,7 +2399,7 @@ Transform:
   m_GameObject: {fileID: 7325608508636176004}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.352, y: -0.0682, z: -0.111}
+  m_LocalPosition: {x: -0.352, y: -0.0682, z: -0.1377}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2381,7 +2472,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3443894312513699125}
   m_Layer: 0
-  m_Name: bus_front_tire_01_pivot
+  m_Name: bus_front_tire_FR_pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2413,7 +2504,7 @@ GameObject:
   m_Component:
   - component: {fileID: 854772854907204058}
   m_Layer: 0
-  m_Name: bus_back_tire_04_pivot
+  m_Name: bus_back_tire_RL_pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2428,10 +2519,11 @@ Transform:
   m_GameObject: {fileID: 7634915889344432784}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.352, y: 0.0682, z: -0.1536}
+  m_LocalPosition: {x: 0.3493, y: 0.0682, z: -0.1272}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3824139277707148559}
   - {fileID: 9044714473881568431}
   m_Father: {fileID: 4147979907357606}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

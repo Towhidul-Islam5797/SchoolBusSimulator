@@ -1,0 +1,15 @@
+{
+  "WorkspaceID": "dv.ws.9fbf59ff-c459-4c51-a644-02e2d7f8536b",
+  "RepoID": "dv.repo.5c836579-4ecb-4083-b0a0-85b801916eda",
+  "Path": "D:\\Unity\\Unity Projects\\JVAI\\SchoolBusSimulator",
+  "AccountID": "Google_115723826916210695738",
+  "BranchID": "dv.branch.1",
+  "BranchName": "main",
+  "CommitID": "dv.commit.2",
+  "Paused": false,
+  "ShouldDownload": false,
+  "RepoName": "SchoolBusSimulator",
+  "ReadOnly": false,
+  "DigestMethod": "sha1",
+  "OrganizationTier": "UNKNOWN"
+}
