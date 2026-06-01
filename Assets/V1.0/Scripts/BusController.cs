@@ -452,6 +452,192 @@
 //}
 #endregion
 #region Milestone 1 Sprint 4 - Finalized Bus Controller with Speed-Based Steering Reduction and Acceleration Sensitivity
+//using UnityEngine;
+//using UnityEngine.InputSystem;
+
+//public class BusController : MonoBehaviour
+//{
+//    public enum Gear { R, N, D }
+
+//    [Header("Wheel Colliders")]
+//    public WheelCollider frontLeftWheel;
+//    public WheelCollider frontRightWheel;
+//    public WheelCollider rearLeftWheel;
+//    public WheelCollider rearRightWheel;
+
+//    [Header("Wheel Pivots")]
+//    public Transform frontLeftPivot;
+//    public Transform frontRightPivot;
+//    public Transform rearLeftPivot;
+//    public Transform rearRightPivot;
+
+//    [Header("Drive Settings")]
+//    public float motorForce = 3000f;
+//    public float brakeForce = 5000f;
+//    public float rollingResistance = 300f;
+
+//    [Header("Speed")]
+//    [Tooltip("Top speed in MPH. Motor force cuts off at this speed.")]
+//    public float maxSpeed = 60f;
+
+//    [Header("Acceleration")]
+//    [Tooltip("How fast the throttle ramps up. Lower = heavier buildup.")]
+//    public float accelerationSensitivity = 1.5f;
+
+//    [Header("Steering")]
+//    [Tooltip("How fast the wheels turn toward full lock when pressing A or D.")]
+//    public float steeringSpeed = 1.5f;
+//    [Tooltip("How fast the wheels return to center when no key is pressed.")]
+//    public float steeringReturnSpeed = 0.8f;
+//    [Tooltip("Max steer angle at low speed.")]
+//    public float maxSteerAngle = 25f;
+//    [Tooltip("Max steer angle at high speed.")]
+//    public float minSteerAngleAtSpeed = 8f;
+//    [Tooltip("Speed in MPH at which steering is fully reduced.")]
+//    public float steeringReductionSpeed = 40f;
+
+//    [Header("Current State")]
+//    public Gear currentGear = Gear.N;
+//    public float currentSpeed;
+
+//    private Rigidbody rb;
+//    private float currentThrottle;
+//    private float currentSteer;
+
+//    void Start()
+//    {
+//        rb = GetComponentInParent<Rigidbody>();
+//    }
+
+//    void Update()
+//    {
+//        HandleGearInput();
+//    }
+
+//    void FixedUpdate()
+//    {
+//        var keyboard = Keyboard.current;
+//        if (keyboard == null) return;
+
+//        float targetThrottle = 0f;
+//        if (keyboard.wKey.isPressed) targetThrottle = 1f;
+//        if (keyboard.sKey.isPressed) targetThrottle = -1f;
+
+//        float targetSteer = 0f;
+//        if (keyboard.aKey.isPressed) targetSteer = -1f;
+//        if (keyboard.dKey.isPressed) targetSteer = 1f;
+
+//        currentThrottle = Mathf.MoveTowards(currentThrottle, targetThrottle, accelerationSensitivity * Time.fixedDeltaTime);
+
+//        // Use a slower return speed when no key is pressed so wheels self-center lazily.
+//        // Use steeringSpeed when actively steering.
+//        float steerStep = targetSteer != 0f ? steeringSpeed : steeringReturnSpeed;
+//        currentSteer = Mathf.MoveTowards(currentSteer, targetSteer, steerStep * Time.fixedDeltaTime);
+
+//        currentSpeed = rb.linearVelocity.magnitude * 2.237f;
+
+//        ApplyMotor(currentThrottle);
+//        ApplySteering(currentSteer);
+//        UpdateWheelMeshes();
+//    }
+
+//    void HandleGearInput()
+//    {
+//        var keyboard = Keyboard.current;
+//        if (keyboard == null) return;
+
+//        if (keyboard.qKey.wasPressedThisFrame)
+//        {
+//            if (currentGear == Gear.R) currentGear = Gear.N;
+//            else if (currentGear == Gear.N) currentGear = Gear.D;
+//        }
+
+//        if (keyboard.eKey.wasPressedThisFrame)
+//        {
+//            if (currentGear == Gear.D) currentGear = Gear.N;
+//            else if (currentGear == Gear.N) currentGear = Gear.R;
+//        }
+//    }
+
+//    void ApplyMotor(float throttle)
+//    {
+//        float motor = 0f;
+//        float brake = 0f;
+
+//        // Below 1 MPH apply zero rolling resistance.
+//        // WheelCollider snaps the bus to zero even with tiny brake values at very low speed.
+//        // Let the physics engine handle the final stop naturally.
+//        float scaledRollingResistance = currentSpeed < 2f ? 0f : rollingResistance;
+
+//        if (currentGear == Gear.D)
+//        {
+//            if (throttle > 0f)
+//            {
+//                float speedRatio = Mathf.Clamp01(currentSpeed / maxSpeed);
+//                float torqueFalloff = 1f - speedRatio;
+//                motor = -throttle * motorForce * torqueFalloff;
+//            }
+//            else if (throttle < 0f)
+//                brake = brakeForce;
+//            else
+//                brake = scaledRollingResistance;
+//        }
+//        else if (currentGear == Gear.R)
+//        {
+//            if (throttle > 0f)
+//            {
+//                float speedRatio = Mathf.Clamp01(currentSpeed / maxSpeed);
+//                float torqueFalloff = 1f - speedRatio;
+//                motor = throttle * motorForce * torqueFalloff;
+//            }
+//            else if (throttle < 0f)
+//                brake = brakeForce;
+//            else
+//                brake = scaledRollingResistance;
+//        }
+//        else
+//        {
+//            brake = brakeForce;
+//        }
+
+//        rearLeftWheel.motorTorque = 0f;
+//        rearRightWheel.motorTorque = 0f;
+
+//        rearLeftWheel.motorTorque = motor;
+//        rearRightWheel.motorTorque = motor;
+
+//        frontLeftWheel.brakeTorque = brake;
+//        frontRightWheel.brakeTorque = brake;
+//        rearLeftWheel.brakeTorque = brake;
+//        rearRightWheel.brakeTorque = brake;
+//    }
+
+//    void ApplySteering(float steer)
+//    {
+//        float speedAlpha = Mathf.InverseLerp(0f, steeringReductionSpeed, currentSpeed);
+//        float effectiveMaxSteer = Mathf.Lerp(maxSteerAngle, minSteerAngleAtSpeed, speedAlpha);
+
+//        frontLeftWheel.steerAngle = steer * effectiveMaxSteer;
+//        frontRightWheel.steerAngle = steer * effectiveMaxSteer;
+//    }
+
+//    void UpdateWheelMeshes()
+//    {
+//        UpdateSingleWheel(frontLeftWheel, frontLeftPivot);
+//        UpdateSingleWheel(frontRightWheel, frontRightPivot);
+//        UpdateSingleWheel(rearLeftWheel, rearLeftPivot);
+//        UpdateSingleWheel(rearRightWheel, rearRightPivot);
+//    }
+
+//    void UpdateSingleWheel(WheelCollider col, Transform pivot)
+//    {
+//        col.GetWorldPose(out Vector3 pos, out Quaternion rot);
+//        pivot.position = pos;
+//        pivot.rotation = rot * Quaternion.Euler(0f, -90f, 0f);
+//    }
+//}
+#endregion
+#region Milestone 1 Final - Bus Controller with Speed-Based Steering Reduction, Acceleration Sensitivity, and Rolling Resistance Scaling
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -502,7 +688,7 @@ public class BusController : MonoBehaviour
 
     private Rigidbody rb;
     private float currentThrottle;
-    private float currentSteer;
+    [HideInInspector] public float currentSteer;
 
     void Start()
     {
@@ -535,6 +721,7 @@ public class BusController : MonoBehaviour
         currentSteer = Mathf.MoveTowards(currentSteer, targetSteer, steerStep * Time.fixedDeltaTime);
 
         currentSpeed = rb.linearVelocity.magnitude * 2.237f;
+        if (currentSpeed < 0.01f) currentSpeed = 0f;
 
         ApplyMotor(currentThrottle);
         ApplySteering(currentSteer);

@@ -9,7 +9,7 @@ public class SpeedometerUI : MonoBehaviour
 
     void Update()
     {
-        speedText.text = (busController.currentSpeed ) + " MPH";
+        speedText.text = Mathf.RoundToInt(busController.currentSpeed * 2f) + " MPH";
         gearText.text = busController.currentGear.ToString();
     }
 }
