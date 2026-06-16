@@ -5,168 +5,32 @@
 // headlight bulb material to look lit or unlit.
 //</summary>
 #endregion
-#region Milestone 2 Sprint 1 - Headlights
-//using UnityEngine;
-//using UnityEngine.InputSystem;
 
-//public class BusLights : MonoBehaviour
-//{
-//    [Header("Headlight Lights")]
-//    public Light headlightLeft;
-//    public Light headlightRight;
-
-//    [Header("Headlight Bulbs")]
-//    public Renderer bulbLeft;
-//    public Renderer bulbRight;
-
-//    [Header("Headlight Materials")]
-//    public Material headlightOnMaterial;
-//    public Material headlightOffMaterial;
-
-//    private bool headlightsOn = false;
-
-//    void Update()
-//    {
-//        var keyboard = Keyboard.current;
-//        if (keyboard == null) return;
-
-//        if (keyboard.lKey.wasPressedThisFrame)
-//        {
-//            headlightsOn = !headlightsOn;
-//            SetHeadlights(headlightsOn);
-//        }
-//    }
-
-//    void SetHeadlights(bool isOn)
-//    {
-//        headlightLeft.enabled = isOn;
-//        headlightRight.enabled = isOn;
-
-//        Material bulbMaterial = isOn ? headlightOnMaterial : headlightOffMaterial;
-//        bulbLeft.material = bulbMaterial;
-//        bulbRight.material = bulbMaterial;
-//    }
-//}
-#endregion
-
-#region Milestone 2 Sprint 2 - Headlights + Rear Lights
-//using UnityEngine;
-//using UnityEngine.InputSystem;
-
-//public class BusLights : MonoBehaviour
-//{
-//    [Header("Headlight Lights")]
-//    public Light headlightLeft;
-//    public Light headlightRight;
-
-//    [Header("Headlight Bulbs")]
-//    public Renderer bulbLeft;
-//    public Renderer bulbRight;
-
-//    [Header("Headlight Materials")]
-//    public Material headlightOnMaterial;
-//    public Material headlightOffMaterial;
-
-//    private bool headlightsOn = false;
-
-//    [Header("Rear Light Bulbs")]
-//    public Renderer rearLightLeft;
-//    public Renderer rearLightRight;
-
-//    [Header("Rear Spot Lights")]
-//    public Light rearLightSpotLeft;
-//    public Light rearLightSpotRight;
-
-//    [Header("Rear Light Materials")]
-//    public Material rearLightOnMaterial;
-//    public Material rearLightOffMaterial;
-
-//    [Header("Rear Light Settings")]
-//    public float blinkInterval = 0.25f;
-
-//    public BusController busController;
-
-//    private float blinkTimer = 0f;
-//    private bool blinkState = false;
-
-//    void Update()
-//    {
-//        var keyboard = Keyboard.current;
-//        if (keyboard == null) return;
-
-//        if (keyboard.lKey.wasPressedThisFrame)
-//        {
-//            headlightsOn = !headlightsOn;
-//            SetHeadlights(headlightsOn);
-//        }
-
-//        UpdateRearLights(keyboard);
-//    }
-
-//    void SetHeadlights(bool isOn)
-//    {
-//        headlightLeft.enabled = isOn;
-//        headlightRight.enabled = isOn;
-
-//        Material bulbMaterial = isOn ? headlightOnMaterial : headlightOffMaterial;
-//        bulbLeft.material = bulbMaterial;
-//        bulbRight.material = bulbMaterial;
-//    }
-
-//    void UpdateRearLights(Keyboard keyboard)
-//    {
-//        bool sPressed = keyboard.sKey.isPressed;
-//        BusController.Gear gear = busController.currentGear;
-
-//        bool braking = sPressed && (gear == BusController.Gear.D || gear == BusController.Gear.N);
-//        bool reversing = gear == BusController.Gear.R;
-//        bool brakingInReverse = sPressed && gear == BusController.Gear.R;
-
-//        if (braking || brakingInReverse)
-//        {
-//            SetRearLights(true);
-//        }
-//        else if (reversing)
-//        {
-//            UpdateBlink();
-//        }
-//        else
-//        {
-//            SetRearLights(false);
-//            blinkTimer = 0f;
-//            blinkState = false;
-//        }
-//    }
-
-//    void UpdateBlink()
-//    {
-//        blinkTimer += Time.deltaTime;
-//        if (blinkTimer >= blinkInterval)
-//        {
-//            blinkTimer = 0f;
-//            blinkState = !blinkState;
-//            SetRearLights(blinkState);
-//        }
-//    }
-
-//    void SetRearLights(bool isOn)
-//    {
-//        Material rearMaterial = isOn ? rearLightOnMaterial : rearLightOffMaterial;
-//        rearLightLeft.material = rearMaterial;
-//        rearLightRight.material = rearMaterial;
-
-//        rearLightSpotLeft.enabled = isOn;
-//        rearLightSpotRight.enabled = isOn;
-//    }
-//}
-#endregion
-
-#region Milestone 2 Sprint 3 - Headlights + Rear Lights + Turn Signals
+///Milestone 2 Sprint 4 - Headlights + Rear Lights + Turn Signals + Hazard Lights
 using UnityEngine;
 using UnityEngine.InputSystem;
  
 public class BusLights : MonoBehaviour
 {
+    void Update()
+    {
+        var keyboard = Keyboard.current;
+        if (keyboard == null) return;
+
+        if (keyboard.lKey.wasPressedThisFrame)
+        {
+            headlightsOn = !headlightsOn;
+            SetHeadlights(headlightsOn);
+        }
+
+        UpdateRearLights(keyboard);
+        UpdateHazardLights(keyboard);
+
+        if (!hazardsOn)
+        {
+            UpdateTurnSignals(keyboard);
+        }
+    }
     #region Milestone Sprint 1 - Headlights
     [Header("Headlight Lights")]
     public Light headlightLeft;
@@ -331,19 +195,47 @@ public class BusLights : MonoBehaviour
     }
     #endregion
 
-    void Update()
-    {
-        var keyboard = Keyboard.current;
-        if (keyboard == null) return;
+    #region Milestone Sprint 4 - Hazard Lights
+    //<summary>
+    // Hazard lights, toggled with X. All 4 turn signal bulbs blink
+    // together in sync. While hazards are on, Z and C are locked out
+    // completely, turn signals do not respond. Turning hazards off
+    // returns Z and C to normal.
+    //</summary>
+    [Header("Hazard Light Settings")]
+    public float hazardBlinkInterval = 0.33f;
 
-        if (keyboard.lKey.wasPressedThisFrame)
+    private bool hazardsOn = false;
+    private float hazardBlinkTimer = 0f;
+    private bool hazardBlinkState = false;
+
+    void UpdateHazardLights(Keyboard keyboard)
+    {
+        if (keyboard.xKey.wasPressedThisFrame)
         {
-            headlightsOn = !headlightsOn;
-            SetHeadlights(headlightsOn);
+            hazardsOn = !hazardsOn;
+            hazardBlinkTimer = 0f;
+            hazardBlinkState = false;
+
+            if (hazardsOn)
+            {
+                leftSignalOn = false;
+                rightSignalOn = false;
+            }
         }
 
-        UpdateRearLights(keyboard);
-        UpdateTurnSignals(keyboard);
+        if (!hazardsOn) return;
+
+        hazardBlinkTimer += Time.deltaTime;
+        if (hazardBlinkTimer >= hazardBlinkInterval)
+        {
+            hazardBlinkTimer = 0f;
+            hazardBlinkState = !hazardBlinkState;
+        }
+
+        SetTurnSignalSide(turnSignalFrontLeft, turnSignalRearLeft, hazardBlinkState);
+        SetTurnSignalSide(turnSignalFrontRight, turnSignalRearRight, hazardBlinkState);
     }
+    #endregion
+
 }
-#endregion
