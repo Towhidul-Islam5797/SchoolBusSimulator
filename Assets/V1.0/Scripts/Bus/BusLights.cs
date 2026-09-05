@@ -139,6 +139,14 @@ public class BusLights : MonoBehaviour
     public Renderer turnSignalFrontRight;
     public Renderer turnSignalRearRight;
 
+    [Header("Turn Signal Spot Lights - Left")]
+    public Light turnSignalSpotFrontLeft;
+    public Light turnSignalSpotRearLeft;
+
+    [Header("Turn Signal Spot Lights - Right")]
+    public Light turnSignalSpotFrontRight;
+    public Light turnSignalSpotRearRight;
+
     [Header("Turn Signal Materials")]
     public Material turnSignalOnMaterial;
     public Material turnSignalOffMaterial;
@@ -183,15 +191,18 @@ public class BusLights : MonoBehaviour
             turnSignalBlinkState = false;
         }
 
-        SetTurnSignalSide(turnSignalFrontLeft, turnSignalRearLeft, leftSignalOn && turnSignalBlinkState);
-        SetTurnSignalSide(turnSignalFrontRight, turnSignalRearRight, rightSignalOn && turnSignalBlinkState);
+        SetTurnSignalSide(turnSignalFrontLeft, turnSignalRearLeft, turnSignalSpotFrontLeft, turnSignalSpotRearLeft, leftSignalOn && turnSignalBlinkState);
+        SetTurnSignalSide(turnSignalFrontRight, turnSignalRearRight, turnSignalSpotFrontRight, turnSignalSpotRearRight, rightSignalOn && turnSignalBlinkState);
     }
 
-    void SetTurnSignalSide(Renderer front, Renderer rear, bool isOn)
+    void SetTurnSignalSide(Renderer front, Renderer rear, Light frontSpot, Light rearSpot, bool isOn)
     {
         Material signalMaterial = isOn ? turnSignalOnMaterial : turnSignalOffMaterial;
         front.material = signalMaterial;
         rear.material = signalMaterial;
+
+        frontSpot.enabled = isOn;
+        rearSpot.enabled = isOn;
     }
     #endregion
 
@@ -233,9 +244,8 @@ public class BusLights : MonoBehaviour
             hazardBlinkState = !hazardBlinkState;
         }
 
-        SetTurnSignalSide(turnSignalFrontLeft, turnSignalRearLeft, hazardBlinkState);
-        SetTurnSignalSide(turnSignalFrontRight, turnSignalRearRight, hazardBlinkState);
+        SetTurnSignalSide(turnSignalFrontLeft, turnSignalRearLeft, turnSignalSpotFrontLeft, turnSignalSpotRearLeft, hazardBlinkState);
+        SetTurnSignalSide(turnSignalFrontRight, turnSignalRearRight, turnSignalSpotFrontRight, turnSignalSpotRearRight, hazardBlinkState);
     }
     #endregion
-
 }
