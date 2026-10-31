@@ -1,0 +1,44 @@
+STAGE 3 SPRINT 4 - TRAFFIC LIGHTS PLACED IN THE MAP
+
+Branch: TowhidRahat
+Status: DONE (Editor work by Rahat)
+
+================================================================
+SPRINT GOAL
+================================================================
+Place traffic lights at the junctions in SampleScene so they run
+in the map.
+
+================================================================
+CHANGES
+================================================================
+Scene: Assets/Scenes/SampleScene.unity
+  - Parent object Enviroment/TrafficLights holds every light.
+  - Each light is a linked TrafficLight prefab instance (blue name
+    in the Hierarchy), so prefab fixes reach every light.
+  - One light per road entering a junction (3 at a T-junction).
+  - Lights stand on the pavement corners, facing the drivers who
+    need to see them.
+
+No script changes in this sprint.
+
+================================================================
+SETUP RULES PER JUNCTION
+================================================================
+- Lights for the same road share a startState. Lights for the
+  crossing road start on the opposite colour (Red vs Green).
+- redDuration = greenDuration + yellowDuration (13 with defaults),
+  so crossing roads never get a go at the same time.
+
+================================================================
+DONE CONDITION
+================================================================
+Every junction has its lights placed and facing traffic, and in
+Play mode crossing roads never show green or yellow at the same
+time.
+
+================================================================
+NOTES
+================================================================
+- Enviroment (1) in the Hierarchy is disabled and unrelated to
+  the traffic lights. Delete later if it is an old copy.

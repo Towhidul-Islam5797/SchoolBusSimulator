@@ -1,0 +1,68 @@
+STAGE 3 SPRINT 2 - TRAFFIC LIGHT LOD
+
+Branch: TowhidRahat
+Status: DONE in code. Two Editor steps still open (see below).
+
+================================================================
+NOTE ON SCOPE
+================================================================
+LOD is optimization work, normally Stage 4. Added early at Rahat's
+request.
+
+================================================================
+SPRINT GOAL
+================================================================
+Far-away traffic lights cost less. Point Lights turn off at medium
+distance, and the whole traffic light is hidden when it is tiny on
+screen.
+
+================================================================
+CHANGES
+================================================================
+Prefab: LOD Group on the TrafficLight root.
+  LOD 0   100% to 20%   pole + lamps, Point Lights on
+  LOD 1   20% to 3%     pole + lamps, Point Lights off
+  Culled  below 3%      everything hidden
+
+Script: TrafficLightController.cs, region "Sprint 1b - Point Light LOD"
+  - A LOD Group can only hide meshes, not Lights, so the script
+    does that part.
+  - New field lodGroup (wired in the prefab).
+  - UpdatePointLightLOD(): each frame works out how tall the traffic
+    light is on screen, with the same maths as the LOD Group. Point
+    Lights are allowed only while it is in LOD 0.
+  - GetScreenHeight(): object size / camera view height at that
+    distance, times QualitySettings.lodBias.
+  - Start() reads the 20% line from the LOD Group once.
+
+Fix: the C# name is LOD.screenRelativeTransitionHeight.
+screenRelativeHeight is only the name inside the prefab file. The
+compile error made Unity drop the lodGroup wiring on every save.
+
+================================================================
+EDITOR STEPS STILL OPEN (Rahat)
+================================================================
+1. Drag the root TrafficLight object (the pole) into LOD 0 and
+   LOD 1. Claude could not find the pole renderer's ID from outside
+   Unity.
+2. Press Recalculate Bounds. Size is still the placeholder 1, so
+   the 20% and 3% lines happen at the wrong distances until then.
+3. Save the prefab.
+
+================================================================
+KNOWN LIMIT
+================================================================
+The 20% line is read once at Play start. Dragging the divider
+during Play mode takes effect on the next Play.
+
+================================================================
+DONE CONDITION
+================================================================
+In Play mode, moving away from a light turns its Point Light off
+at the 20% line while the lamp still shows its colour. Below 3%
+the whole traffic light disappears.
+
+================================================================
+COMMITS
+================================================================
+178c041  LOD Group, Point Light LOD, API name fix

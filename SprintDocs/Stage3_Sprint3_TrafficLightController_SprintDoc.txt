@@ -1,0 +1,73 @@
+STAGE 3 SPRINT 3 - TRAFFICLIGHTCONTROLLER.CS V1
+
+Branch: TowhidRahat
+Status: DONE
+
+================================================================
+SPRINT GOAL
+================================================================
+One traffic light cycles Green -> Yellow -> Red -> Green on its own.
+Only the active lamp glows and only its Point Light is on.
+
+================================================================
+CHANGES
+================================================================
+New: Assets/V1.0/Scripts/Signs/TrafficLightController.cs
+  On the TrafficLight prefab root, all fields wired.
+
+  - LightState enum: Green, Yellow, Red.
+  - Start(): applies startState.
+  - Update(): a timer moves to the next state when the current
+    state's duration passes.
+  - GetDuration(), GetNextState(): timing and order of the cycle.
+  - SetLamps(): turns the active lamp's Mesh Renderer on and the
+    other two off. A hidden lamp shows the model's dark tinted lens.
+    Point Light on only for the active lamp (and only in LOD 0, see
+    Sprint 2).
+
+Inspector fields:
+  Lamps          redLamp, yellowLamp, greenLamp (Renderer)
+  Point Lights   redLight, yellowLight, greenLight (Light)
+  Cycle          greenDuration 10, yellowDuration 3, redDuration 10
+  startState     Red, Yellow or Green
+
+v1 first swapped on/off materials. Changed to hiding the Renderer
+once the model's own lenses were found to look better. The four
+material fields were removed.
+
+================================================================
+DECISIONS
+================================================================
+- US style cycle, Green -> Yellow -> Red. No Red+Yellow phase.
+  Confirmed by Rahat.
+- Each traffic light runs on its own. startState lets the lights
+  at one junction start out of step. No automatic sync.
+- Junction rule: redDuration = greenDuration + yellowDuration
+  (13 with the defaults). Otherwise crossing roads both get a go
+  for 3 seconds every cycle.
+
+================================================================
+DONE CONDITION
+================================================================
+In Play mode a placed traffic light cycles Green -> Yellow -> Red ->
+Green with the Inspector timings. Only one lamp glows at a time.
+Changing startState changes the colour it starts on.
+
+================================================================
+COMMITS
+================================================================
+f97ffd7  script v1, prefab wiring
+178c041  lamps hide instead of swapping material
+
+================================================================
+NOT IN THIS SPRINT
+================================================================
+- Bus reacting to red lights (stopping, penalties)
+- Automatic junction sync
+- Street signs
+- Stop arm and crossing arm
+
+================================================================
+OPEN QUESTIONS FOR STRYFLEX
+================================================================
+- Cycle timings.

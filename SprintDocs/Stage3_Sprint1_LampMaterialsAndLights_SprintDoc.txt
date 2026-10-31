@@ -1,0 +1,61 @@
+STAGE 3 SPRINT 1 - TRAFFIC LIGHT LAMP MATERIALS AND LIGHTS
+
+Branch: TowhidRahat
+Status: DONE
+
+================================================================
+CONTRACT CONTEXT
+================================================================
+Stage 3 - Sign Systems - $350 - 9 Oct to 8 Nov 2026 - ACTIVE
+Scope: traffic lights and street signs, with their scripts.
+Stop arm and crossing arm moved to a later milestone.
+
+================================================================
+SPRINT GOAL
+================================================================
+Give the premade traffic light model three working lamps (red,
+yellow, green), each with a glowing material and a light that tints
+the pole and the ground nearby.
+
+================================================================
+CHANGES
+================================================================
+Prefab: Assets/Imports/Environments/traffic-light/Prefab/TrafficLight.prefab
+  - Three lamp spheres on the model: Red_Light, Yellow_Light,
+    Green_Light. Each has its own glowing material.
+  - One Point Light under each lamp (red, yellow, green).
+  - Point Lights softened: intensity 50 -> 3, range 15 -> 4.
+    The first values washed the area in colour.
+
+Materials: Assets/Imports/Environments/traffic-light/Materials/Lights/
+  - RedLIght.mat, GreenLIght.mat: emissive URP Lit.
+  - GreenLIght 1.mat renamed to YellowLight.mat. It was always the
+    yellow lamp; the old name was misleading. GUID kept.
+  - TrafficLampOff.mat was created, then deleted. The model already
+    has dark tinted lenses behind each lamp, so hiding a lamp looks
+    better than a grey off material (see Sprint 3).
+
+================================================================
+DECISIONS
+================================================================
+- Point Lights, not Spot Lights. A lamp glows in every direction.
+- Exception to the on/off material pair rule: the model's own lens
+  is the "off" look, so no off material is needed.
+
+================================================================
+DONE CONDITION
+================================================================
+Each lamp glows in its own colour and softly tints the pole and
+the ground just below it, without flooding the area.
+
+================================================================
+COMMITS
+================================================================
+f97ffd7  materials, YellowLight rename
+98cf482  soften Point Lights (intensity 3, range 4)
+178c041  TrafficLampOff.mat deleted
+
+================================================================
+OPEN QUESTIONS FOR STRYFLEX
+================================================================
+- Approval of the premade traffic light model.
