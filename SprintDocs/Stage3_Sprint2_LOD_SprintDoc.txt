@@ -42,9 +42,8 @@ compile error made Unity drop the lodGroup wiring on every save.
 ================================================================
 EDITOR STEPS STILL OPEN (Rahat)
 ================================================================
-1. Drag the root TrafficLight object (the pole) into LOD 0 and
-   LOD 1. Claude could not find the pole renderer's ID from outside
-   Unity.
+1. DONE by Claude: pole added to LOD 0 and LOD 1. Its renderer ID
+   (-7511558181221131132) was read from Unity's import cache.
 2. Press Recalculate Bounds. Size is still the placeholder 1, so
    the 20% and 3% lines happen at the wrong distances until then.
 3. Save the prefab.
