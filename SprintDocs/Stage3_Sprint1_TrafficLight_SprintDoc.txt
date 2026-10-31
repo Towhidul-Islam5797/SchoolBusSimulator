@@ -1,0 +1,75 @@
+STAGE 3 SPRINT 1 - TRAFFIC LIGHT CYCLE
+
+Branch: TowhidRahat
+Status: BUILT, awaiting Editor setup and Play mode test
+
+================================================================
+CONTRACT CONTEXT
+================================================================
+Stage 3 - Sign Systems - $350 - 9 Oct to 8 Nov 2026 - ACTIVE
+Scope: traffic lights and street signs, with their scripts.
+Stop arm and crossing arm moved to a later milestone.
+
+================================================================
+SPRINT GOAL
+================================================================
+One traffic light cycles Green -> Yellow -> Red -> Green on its own.
+Only the active lamp glows and only its Point Light is on.
+
+================================================================
+DECISIONS
+================================================================
+- Cycle: US style, Green -> Yellow -> Red. No Red+Yellow phase.
+  Confirmed by Rahat.
+- Default timings: green 10 s, yellow 3 s, red 10 s. All tunable in
+  the Inspector. Not yet confirmed with stryflex.
+- Each traffic light runs on its own. startState lets two lights at
+  one junction start out of step. No automatic sync.
+
+================================================================
+CHANGES
+================================================================
+New: Assets/V1.0/Scripts/Signs/TrafficLightController.cs
+  - LightState enum: Green, Yellow, Red
+  - Start(): applies startState
+  - Update(): timer moves to the next state when the current
+    state's duration passes
+  - SetLamps(): on material + Point Light for the active lamp,
+    off material + Point Light off for the other two
+
+================================================================
+EDITOR STEPS (done by Claude on Rahat's request, steps 1 to 4)
+================================================================
+TrafficLampOff.mat was created next to the other lamp materials in
+Materials/Lights. Step 5 was not done.
+
+1. Create material TrafficLampOff (URP Lit, dark grey, emission off).
+2. Rename GreenLIght 1.mat to YellowLight.mat in the Project window.
+3. Add TrafficLightController to the root of TrafficLight.prefab.
+4. Wire fields:
+     Lamps         Red_Light, Yellow_Light, Green_Light
+     Point Lights  the Point Light child of each lamp
+     Materials     RedLIght, YellowLight, GreenLIght, TrafficLampOff
+5. Optional: remove the 3 SphereColliders on the lamps.
+
+================================================================
+DONE CONDITION
+================================================================
+In Play mode a placed traffic light cycles Green -> Yellow -> Red ->
+Green with the Inspector timings. Only one lamp glows at a time.
+Changing startState changes the colour it starts on.
+
+================================================================
+NOT IN THIS SPRINT
+================================================================
+- Bus reacting to red lights (stopping, penalties)
+- Junction sync between lights
+- Street signs
+- Stop arm and crossing arm
+
+================================================================
+OPEN QUESTIONS FOR STRYFLEX
+================================================================
+- Approval of the premade traffic light model.
+- Cycle timings.
+- Sign list for the street signs sprint.
