@@ -36,9 +36,8 @@
 7. Ask before starting if anything is unclear.
 
 ## Editor split
-- Claude writes scripts only.
-- Rahat places objects, creates materials, and wires Inspector fields.
-- Never edit `.unity`, `.prefab`, `.mat` or `.meta` files. For each sprint, list the Editor steps Rahat must do.
+- By default, Claude writes scripts and Rahat places objects, creates materials, and wires Inspector fields. For each sprint, list the Editor steps Rahat must do.
+- Claude may edit `.unity`, `.prefab`, `.mat` or `.meta` files only when Rahat explicitly asks for that specific task. Before editing, ask Rahat to save and close the scene or prefab in Unity, and never change a `.meta` GUID.
 
 ## Code conventions
 - Scripts live in `Assets/V1.0/Scripts/<Folder>/`.
