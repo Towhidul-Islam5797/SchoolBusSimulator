@@ -1,0 +1,182 @@
+STAGE 1 - FINAL TUNING SPRINT
+
+Branch: TowhidRahat
+Status: COMPLETE - Delivered to client (stryflex) and approved
+
+================================================================
+GOALS
+================================================================
+- Fix bus physics instability (vibration, drift, spinning at rest)
+- Add realistic acceleration, braking, and steering feel
+- Add top speed limit with torque falloff
+- Fix camera follow (ETS2-style, fixed distance, no lag)
+- Add steering wheel mesh rotation
+- Optimize FPS (was below 20, environment-heavy scene)
+- Deliver Stage 1 build to client
+
+================================================================
+FILES CHANGED
+================================================================
+- Assets/V1.0/Scripts/BusController.cs
+- Assets/V1.0/Scripts/CameraFollow.cs
+- Assets/V1.0/Scripts/SpeedometerUI.cs
+- Assets/V1.0/Scripts/SteeringWheelRotator.cs (NEW)
+
+(Scripts were later moved into Bus/, Camera/ and Speed/ subfolders.)
+
+================================================================
+BUS CONTROLLER - KEY CHANGES
+================================================================
+- Removed all hardcoded WheelCollider physics overrides from code.
+  Suspension, friction, center of mass, angular damping are now
+  controlled entirely from the Inspector.
+
+- Fixed motor torque sign for D and R gears (was inverted, caused
+  wrong-direction movement).
+
+- Added zero-then-set pattern for motorTorque before applying brake,
+  to stop wheels fighting each other and spinning visually.
+
+- Added smooth throttle ramping (Mathf.MoveTowards) instead of
+  instant on/off. Controlled by accelerationSensitivity.
+
+- Added separate steering speed and steering return speed.
+  Wheels turn faster than they return to center (lazy self-center,
+  feels like a heavy bus).
+
+- Added speed-based steering reduction. Max steer angle drops from
+  maxSteerAngle (low speed) to minSteerAngleAtSpeed (high speed),
+  blended by steeringReductionSpeed.
+
+- Added maxSpeed with torque falloff. Motor force scales down to
+  zero as currentSpeed approaches maxSpeed. Bus accelerates hard
+  from standstill, struggles near top speed.
+
+- Fixed rolling resistance snapping bus to 0 instantly at low speed.
+  WheelCollider locks even with tiny brake torque at very low speed.
+  Fix: below 2 MPH, rolling resistance brake = 0. Physics engine
+  handles the final crawl-to-stop naturally.
+
+- currentSpeed clamped to 0 if below 0.01 to avoid floating point
+  noise (e.g. 1.3e-08) showing in Inspector.
+
+- currentSteer changed to [HideInInspector] public so
+  SteeringWheelRotator can read it.
+
+CURRENT TUNED VALUES (Inspector, BusRoot):
+  Rigidbody Mass: 8500
+  Rigidbody Linear Damping: 0
+  Rigidbody Angular Damping: 5
+  Rigidbody Automatic Center of Mass: OFF, Center of Mass Y: -1
+
+  Motor Force: 2000
+  Brake Force: 700
+  Rolling Resistance: 0.1
+  Max Speed: 60
+  Acceleration Sensitivity: 1.5
+  Steering Speed: 1.5
+  Steering Return Speed: 0.8
+  Max Steer Angle: 35
+  Min Steer Angle At Speed: 8
+  Steering Reduction Speed: 40
+
+WheelCollider values (set manually per wheel in Inspector):
+  Radius: 0.07
+  Suspension Distance: ~0.1 (verify per wheel)
+  Spring/Damper: tuned manually, not hardcoded in code
+
+================================================================
+CAMERA FOLLOW - KEY CHANGES
+================================================================
+- Rewritten to follow BusRoot directly (no rear axle pivot needed).
+- Position: fixed offset from BusRoot, recalculated every frame
+  using Quaternion rotation - NO SmoothDamp, NO lag. Camera stays
+  at exact distance set in editor.
+- Y rotation: maintains the original offset between camera's
+  starting Y rotation and bus's Y rotation (yRotationOffset).
+  Whatever angle you place the camera at in the editor is
+  preserved as the bus turns.
+- X rotation: fixed value (cameraXRotation), inspector-editable,
+  does not change with bus pitch.
+- FOV and rotation damping still scale with speed
+  (lowSpeedFOV/highSpeedFOV, lowSpeedRotationDamping/
+  highSpeedRotationDamping).
+
+Setup required in Inspector (Main Camera):
+  Bus Transform: BusRoot
+  Camera X Rotation: 20 (adjust to taste)
+
+================================================================
+SPEEDOMETER UI
+================================================================
+- Display multiplier is x2 (not x5, changed during tuning).
+  speedText.text = Mathf.RoundToInt(busController.currentSpeed * 2f)
+- Real physics speed maxes around 30 MPH, displayed as 60 MPH.
+
+================================================================
+STEERING WHEEL ROTATOR (NEW FILE)
+================================================================
+- Attached to bus_inner_sterring_wheel mesh.
+- Rotates on local Z axis based on busController.currentSteer.
+- maxRotationAngle = 180 (adjustable in Inspector).
+- Requires BusController reference (drag BusRoot in).
+
+================================================================
+PERFORMANCE / FPS OPTIMIZATION
+================================================================
+Starting point: ~7-8 FPS with full environment, Batches: 7582,
+Saved by batching: 0, Shadow casters: 1701.
+
+Fixes applied:
+- URP asset (PC_RPAsset): GPU Resident Drawer changed from
+  "Instanced Drawing" to "Disabled" (was conflicting with static
+  batching, causing Saved by batching: 0).
+- Shadow Cascade Count reduced from 4 to 2.
+- Shadow Max Distance set to 10.
+- Environment / Environment(1) marked as Static in Hierarchy.
+- LOD Groups added to Colorful City prefabs (Assets/Triangularity/
+  ColorfulCity/Models/Prefabs/) - only LOD0 exists per asset
+  (no LOD1/LOD2 meshes available), so setup is:
+    LOD 0 = full mesh, MeshRenderer assigned
+    Culled threshold ~5% for small props (benches, lamps, hedges)
+    Culled threshold ~10-15% for buildings
+  STATUS: Started manually, NOT all 55 prefabs completed.
+  KNOWN DEBT - see below.
+
+Result: Batches dropped from 7582 toward ~3700 after partial fixes.
+Further drop expected once all prefabs have LOD Groups.
+
+================================================================
+KNOWN DEBT / CARRY-OVER
+================================================================
+1. LOD Groups not finished on all 55 Colorful City prefabs.
+   Rahat is doing this manually.
+   Reference table for culled thresholds:
+     Benches, lamps, small props: 5%
+     Trees, hedges: 8%
+     Small buildings: 12%
+     Large buildings: 15%
+   Skip Road and Pavement prefabs (already low-poly flat planes).
+
+2. BusSimpleMove.cs is unused dead code. Candidate for deletion in
+   a future cleanup pass.
+
+3. WheelCollider Suspension Distance and Spring/Damper values
+   were tuned manually in Inspector but NOT recorded with exact
+   final numbers. If suspension issues reappear, re-check these
+   per wheel (WC_FL, WC_FR, WC_RL, WC_RR).
+
+================================================================
+DELIVERY STATUS
+================================================================
+Stage 1 delivery message sent to stryflex via Fiverr, covering:
+  - Bus import and hierarchy setup
+  - Driving controller with D/N/R gears
+  - Realistic acceleration, braking, coasting
+  - Speed-sensitive steering
+  - ETS2-style camera
+  - Speedometer UI
+  - Steering wheel rotation
+  - Performance optimization
+
+Stage 1 approved by client. Stage 2 (Lighting) followed.

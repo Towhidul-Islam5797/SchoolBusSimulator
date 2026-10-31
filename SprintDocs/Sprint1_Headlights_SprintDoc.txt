@@ -1,0 +1,59 @@
+SPRINT 1 - HEADLIGHTS
+
+Milestone: Stage 2 - Lighting
+Branch: TowhidRahat
+Status: DONE (delivered with Stage 2)
+
+================================================================
+GOAL
+================================================================
+Player presses the headlight key. Both headlights turn on: the
+bulbs glow and the road in front of the bus lights up. Press again,
+both turn off.
+
+Note: this doc was planned with the H key. The built key is L.
+
+================================================================
+WHAT WAS BUILT (Claude side)
+================================================================
+New file: Assets/V1.0/Scripts/BusLights.cs (now in Scripts/Bus/)
+
+- Script goes on BusRoot (same object as BusController).
+- Checks if the key was pressed this frame, using the same input
+  pattern as BusController (Keyboard.current).
+- On press, flips a headlightsOn true/false switch and applies it:
+    - Turns headlightLeft and headlightRight (Light components)
+      on/off
+    - Swaps bulbLeft and bulbRight (Renderers) to the "on" or "off"
+      material
+
+6 Inspector fields to fill once the script is on BusRoot:
+  Headlight Left          -> the left Spot Light
+  Headlight Right         -> the right Spot Light
+  Bulb Left               -> the left bulb Renderer
+  Bulb Right              -> the right bulb Renderer
+  Headlight On Material   -> the glowing material
+  Headlight Off Material  -> the dark/plain material
+
+================================================================
+WHAT RAHAT DID IN THE EDITOR
+================================================================
+1. Created two small Sphere objects under the bus model, renamed
+   Headlight_Bulb_L and Headlight_Bulb_R, placed at the front.
+   (The final bulbs are Cube-shaped.)
+
+2. Created two materials:
+   Headlight_Off  -> plain dark gray, Emission off
+   Headlight_On   -> Emission ON, white or pale yellow
+
+3. Added a Spot Light as a child of each bulb, aimed forward.
+
+4. Put BusLights.cs on BusRoot and filled the 6 Inspector fields.
+
+5. Pressed Play, confirmed bulbs glow and road lights up.
+
+================================================================
+DONE CONDITION
+================================================================
+The key toggles both headlight Lights and both bulb materials
+together, on and off, confirmed in Play mode with a screenshot.

@@ -1,0 +1,78 @@
+SPRINT 2 - BRAKE / STOP LIGHTS
+
+Milestone: Stage 2 - Lighting
+Branch: TowhidRahat
+Status: DONE (delivered with Stage 2)
+
+================================================================
+GOAL
+================================================================
+While the bus is braking, the two rear bulbs glow red. When braking
+stops, they go dark. No dedicated toggle key. This is automatic and
+tied to the brake input, the same way real brake lights work.
+
+================================================================
+REAL-WORLD RULE BEING FOLLOWED
+================================================================
+Real brake lights track whether the brake pedal is pressed, not
+speed, direction, or gear.
+
+Our bus uses one key (S) for two jobs depending on gear:
+  - In Drive or Neutral, S is the brake (slows the bus down)
+  - In Reverse, S is the "gas" for moving backward
+
+Original rule planned in this doc:
+  Brake lights ON  -> S is pressed AND gear is D or N
+  Lights OFF       -> any other case
+
+FINAL BEHAVIOR (changed during the sprint, as delivered):
+  Brake lights solid red -> S pressed in D or N
+  Reverse lights BLINK   -> gear is R (as soon as R is selected)
+  Brake overrides blink  -> S pressed while in R gives solid red
+  Lights OFF             -> any other case
+
+This matches a real vehicle: reverse lights come on the instant
+Reverse is selected, and the brake overrides them if both are
+active.
+
+================================================================
+WHAT WAS BUILT (Claude side)
+================================================================
+Same file as Sprint 1: Assets/V1.0/Scripts/Bus/BusLights.cs
+(the bus's central lighting script, each sprint adds to it)
+
+Fields added:
+  Renderer rearLightLeft, rearLightRight
+  Light rearLightSpotLeft, rearLightSpotRight
+  Material rearLightOnMaterial, rearLightOffMaterial
+  float blinkInterval (reverse blink speed)
+  BusController busController (to read the current gear)
+
+Logic added:
+  - Every frame, check S (same Keyboard.current pattern)
+  - Read gear from BusController
+  - Apply the rule above, blinking with a timer in Reverse
+
+================================================================
+WHAT RAHAT DID IN THE EDITOR
+================================================================
+1. Created two bulb objects at the back of the bus and positioned
+   them over the rear bumps.
+2. Created on/off materials (Emission on, bright red for "on").
+3. Dragged bulb Renderers, Spot Lights, materials and BusController
+   into the new Inspector fields.
+
+================================================================
+DONE CONDITION
+================================================================
+- Holding S in Drive or Neutral turns both rear bulbs red.
+- Releasing S turns them off.
+- Selecting Reverse makes the rear bulbs blink.
+- Holding S in Reverse turns them solid red.
+All confirmed in Play mode.
+
+================================================================
+NEXT
+================================================================
+Sprint 3 (Turn Signals) and Sprint 4 (Hazard Lights) followed in
+the same script. No separate SprintDocs for them exist yet.

@@ -1,0 +1,91 @@
+STAGE 2 - BUS LIGHTING SYSTEMS
+
+Branch: TowhidRahat
+Status: DELIVERED to client (stryflex)
+
+================================================================
+CONTRACT CONTEXT
+================================================================
+Order #FO31BD4F40385 - "Lighting Systems" - $350 - 20 days
+Started: 4 Jun 2026, Due: 24 Jun 2026
+Payment received in full.
+
+Milestone structure (replaces the old combined Stage 2):
+  Stage 1 - Driving System + Bus Setup            - $350  - DONE, approved
+  Stage 2 - Lighting Systems                      - $350  - DELIVERED
+  Stage 3 - Sign Systems                          - $350  - next
+  Stage 4 - Passenger + Route + Atmosphere +
+            Polish + Optimization                 - $1150 - due last
+
+Total project cost: $2200 / 60 days, unchanged.
+Sign systems are their own paid stage (Stage 3), not bundled with
+lighting.
+
+================================================================
+SPRINT GOAL
+================================================================
+Build a working bus lighting system. Every light toggles on/off and
+is visibly testable for client screenshot/video review.
+
+================================================================
+ORIGINAL TASK BREAKDOWN (planning)
+================================================================
+Task 1 - Headlights
+  - Two Spot Lights (front-left, front-right), cast light on road
+  - Two glowing bulb objects (small sphere + emissive material)
+  - Toggle key: planned H, built as L
+  - Done: key toggles both Lights + both bulbs on/off together
+
+Task 2 - Turn Signals
+  - Left and right amber indicator lights, steady blink rate
+  - Planned keys: Left/Right Arrow, built as Z (left) and C (right)
+  - Done: correct side blinks on its own, other side unaffected
+
+Task 3 - Brake Lights + Hazard Lights
+  - Red rear lights, on while braking (S key)
+  - Hazard lights = both turn signals blinking together
+  - Hazard toggle key: X
+  - Stop-light fixture built now; wiring to the stop arm happens in
+    the Sign Systems stage
+  - Done: braking lights up rear lights, X blinks all 4 corners
+
+Task 4 - Interior Cabin Lights
+  - SKIPPED by decision (not needed right now, can revisit later)
+
+Task 5 - LED vs Incandescent Variants
+  - SKIPPED by decision (not needed right now, can revisit later)
+
+================================================================
+WHAT WAS DELIVERED (final)
+================================================================
+All in one script: Assets/V1.0/Scripts/Bus/BusLights.cs
+  Sprint 1 - Headlights (L key)
+  Sprint 2 - Brake and Reverse Lights (automatic)
+  Sprint 3 - Turn Signals (Z left, C right, mutually exclusive)
+  Sprint 4 - Hazard Lights (X key, locks out Z and C)
+
+Later change: Spot Lights were added to the turn signal bulbs after
+stryflex asked for rear light reflections. SetTurnSignalSide now
+also drives 4 Spot Lights (front/rear, left/right).
+
+================================================================
+HARD BOUNDARIES - NOT BUILT IN THIS STAGE
+================================================================
+- Stop arm mechanism, crossing arm animation   (Sign Systems stage)
+- Passenger gameplay, route system             (Stage 4)
+- Day/night cycle, lighting moods              (Stage 4)
+- Pre-trip inspection UI, VIP buttons          (client confirmed not
+                                                needed for demo)
+- Audio foundation                             (not in current scope)
+
+================================================================
+CARRIED-OVER DEBT FROM STAGE 1
+================================================================
+- LOD Groups not finished on all Colorful City prefabs
+- BusSimpleMove.cs unused, candidate for deletion
+- WheelCollider suspension/spring values not recorded per wheel
+
+================================================================
+FILES TOUCHED
+================================================================
+- Assets/V1.0/Scripts/Bus/BusLights.cs (new)
