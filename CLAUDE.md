@@ -31,7 +31,7 @@
 2. Propose a plan: what changes, which files are touched, the done condition. Wait for explicit approval before writing anything.
 3. Work one sprint at a time. Never move to the next sprint without confirmation.
 4. Write a SprintDoc .txt for each sprint (goals, changes, done condition) in `SprintDocs/` at the repo root.
-5. When a sprint is done, give a ready-to-copy Git commit message.
+5. When a sprint is done, give a ready-to-copy Git commit message. Never add `Co-Authored-By:` or any other attribution or trailer lines to commit messages.
 6. When a milestone is done, write a delivery checklist and list known debt carried forward.
 7. Ask before starting if anything is unclear.
 
