@@ -804,13 +804,11 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 53ad506b68413514b85252f4eae146f5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8804952959666656836}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 53ad506b68413514b85252f4eae146f5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6001463083187969889}
   m_SourcePrefab: {fileID: 100100000, guid: 53ad506b68413514b85252f4eae146f5, type: 3}
---- !u!4 &5587818753595987408 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 53ad506b68413514b85252f4eae146f5, type: 3}
-  m_PrefabInstance: {fileID: 5332634626607788603}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &286686497471648738 stripped
+--- !u!1 &5098139793786310506 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 53ad506b68413514b85252f4eae146f5, type: 3}
   m_PrefabInstance: {fileID: 5332634626607788603}
@@ -821,11 +819,11 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 286686497471648738}
+  m_GameObject: {fileID: 5098139793786310506}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d4e050d655d6e046978010d14787a07, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrafficLightController
   redLamp: {fileID: 6302801004926100500}
   yellowLamp: {fileID: 153706574754446692}
@@ -833,11 +831,40 @@ MonoBehaviour:
   redLight: {fileID: 2591391524965475197}
   yellowLight: {fileID: 7423875741423394055}
   greenLight: {fileID: 4413778431361866761}
-  redOnMaterial: {fileID: 2100000, guid: cbbf46148d0a0a642998454d5a86f48c, type: 2}
-  yellowOnMaterial: {fileID: 2100000, guid: c504b856c1aeab94aa225514a0d40073, type: 2}
-  greenOnMaterial: {fileID: 2100000, guid: a146e778cf0a15c42a0064ac3559ccc5, type: 2}
-  lampOffMaterial: {fileID: 2100000, guid: 134167d9b84b46399c77e7a62a6d3271, type: 2}
   greenDuration: 10
   yellowDuration: 3
   redDuration: 10
   startState: 2
+  lodGroup: {fileID: 6001463083187969889}
+--- !u!205 &6001463083187969889
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5098139793786310506}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.2
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 6302801004926100500}
+    - renderer: {fileID: 153706574754446692}
+    - renderer: {fileID: 6213963953520397611}
+  - screenRelativeHeight: 0.03
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 6302801004926100500}
+    - renderer: {fileID: 153706574754446692}
+    - renderer: {fileID: 6213963953520397611}
+  m_Enabled: 1
+--- !u!4 &5587818753595987408 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 53ad506b68413514b85252f4eae146f5, type: 3}
+  m_PrefabInstance: {fileID: 5332634626607788603}
+  m_PrefabAsset: {fileID: 0}

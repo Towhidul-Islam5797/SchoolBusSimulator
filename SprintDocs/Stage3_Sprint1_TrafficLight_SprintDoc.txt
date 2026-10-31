@@ -73,3 +73,54 @@ OPEN QUESTIONS FOR STRYFLEX
 - Approval of the premade traffic light model.
 - Cycle timings.
 - Sign list for the street signs sprint.
+
+================================================================
+SPRINT 1b - LOD GROUP + POINT LIGHT LOD (added on Rahat's request)
+================================================================
+Note: LOD is optimization work, normally Stage 4. Added early at
+Rahat's request.
+
+Prefab: LOD Group on the TrafficLight root.
+  LOD 0   100% to 20%   pole + lamps, Point Lights on
+  LOD 1   20% to 3%     pole + lamps, Point Lights off
+  Culled  below 3%      everything hidden
+
+Script: TrafficLightController.cs, new region Sprint 1b.
+  - New field lodGroup (wired in the prefab).
+  - UpdatePointLightLOD(): each frame works out the traffic light's
+    screen height with the same maths as the LOD Group. Point Lights
+    are allowed only while it is in LOD 0.
+  - SetLamps(): Point Lights now also require pointLightsAllowed.
+
+Editor steps (Rahat):
+  1. Open the prefab, select the root, find the LOD Group.
+  2. Drag the root TrafficLight (the pole mesh) into LOD 0 and LOD 1.
+     Claude could not find the pole renderer's ID from outside Unity.
+  3. Press Recalculate Bounds. Save the prefab.
+
+Done condition: in Play mode, moving away from a light turns its
+Point Light off at the 20% divider while the lamp colour still
+shows. Moving farther (below 3%) hides the whole traffic light.
+
+================================================================
+SPRINT 1c - LAMPS HIDE INSTEAD OF SWAPPING MATERIAL
+================================================================
+The traffic light model has its own dark tinted lenses behind the
+lamp spheres. Hiding a sphere shows that lens, which looks like a
+real unlit traffic light.
+
+Changes:
+  - SetLamps(): turns each lamp's Mesh Renderer on/off instead of
+    swapping materials. Point Lights are still handled separately.
+  - Removed fields redOnMaterial, yellowOnMaterial, greenOnMaterial,
+    lampOffMaterial.
+  - Deleted TrafficLampOff.mat (no longer used).
+  - Fixed compile error: the C# API name is
+    LOD.screenRelativeTransitionHeight (screenRelativeHeight is only
+    the name inside the prefab file).
+
+Exception to the on/off material pair rule: the model provides the
+"off" look itself, so no off material is needed.
+
+Done condition: in Play mode only the active lamp's glowing sphere
+shows, the other two show the model's dark tinted lenses.
